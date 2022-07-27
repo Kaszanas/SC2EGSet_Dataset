@@ -1,6 +1,9 @@
 import json
 import tempfile
 import unittest
+from pathlib import Path
+from typing import Tuple
+
 from sc2egset_dataset.dataset.validators.multiprocess_validator import (
     validate_integrity_mp,
     validate_integrity_persist_mp,
@@ -11,8 +14,6 @@ from sc2egset_dataset.dataset.validators.singleprocess_validator import (
 )
 
 import tests.test_utils.test_utils as test_utils
-
-from pathlib import Path
 
 
 class IntegrityValidatorTest(unittest.TestCase):
@@ -87,3 +88,22 @@ class IntegrityValidatorTest(unittest.TestCase):
 
         self.assertIsInstance(next(iter(skip_files)), str)
         self.assertEqual(len(skip_files), 1)
+
+    def test_should_raise_exception_if_worker_less_equal_zero(self):
+        with self.assertRaises(Exception) as e:
+            validated_replays = validate_integrity_mp(
+                list_of_replays=[
+                    "./test/test_files/single_replay/test_replay.json",
+                    "./test/test_files/single_replay/test_bit_flip_example.json"],
+                n_workers=0)
+
+        self.assertEqual(str(e.exception), "Number of workers cannot be equal or less than zero!")
+
+    def test_should_set_a_set_if_empty_list_of_replays(self):
+        # given
+        validated_replays = validate_integrity_mp(
+            list_of_replays=[],
+            n_workers=1)
+        # when
+        # then
+        assert(isinstance(validated_replays, Tuple))
