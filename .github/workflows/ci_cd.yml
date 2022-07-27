@@ -34,7 +34,7 @@ jobs:
         run: poetry run pylama --async tests/
 
       # - name: Test with pytest
-      #   run: poetry run pytest --ignore-glob='test_*.py' tests/ --cov=sc2egset_dataset --cov-report term-missing --cov=xml
+      #   run: poetry run pytest --ignore-glob='test_*.py' tests/ --cov=sc2egset_dataset --cov-report term-missing --cov-report html:tests/tests_coverage_html
 
       # - name: Use Codecov to track coverage
       #   uses: codecov/codecov-action@v2

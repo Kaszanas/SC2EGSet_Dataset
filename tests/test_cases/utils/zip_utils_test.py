@@ -1,14 +1,13 @@
-import unittest
+import logging
 import os
 import shutil
+import unittest
 import zipfile
-
 from pathlib import Path
 
 from sc2egset_dataset.dataset.utils.zip_utils import unpack_chunk, unpack_zipfile
 
 from tests.test_utils.test_utils import get_specific_asset, get_test_output_dir
-
 
 """
     **Incorrect Usage Examples:**
@@ -97,3 +96,25 @@ class ZipUtilsTest(unittest.TestCase):
             filenames=file_list,
             path_to_extract=extraction_path.as_posix(),
         )
+
+    def test_unpack_chunk_should_throw_zipfile_error(self):
+        # given
+        with zipfile.ZipFile(self.replaypack_zip_path, "r") as zip_file:
+            file_list = zip_file.namelist()
+
+        extraction_path = Path(
+            os.path.join(self.unpack_dir_path, self.test_replaypack_name)
+        )
+        if not extraction_path.exists():
+            extraction_path.mkdir()
+        self.unpacked = extraction_path.as_posix()
+
+        # when
+        # then
+        with self.assertRaises(Exception) as e:
+            unpack_chunk(
+                zip_path=self.replaypack_zip_path,
+                filenames=file_list,
+                path_to_extract=1
+            )
+
