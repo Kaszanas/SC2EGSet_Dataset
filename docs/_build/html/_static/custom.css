@@ -3,9 +3,9 @@ body {
     width: 100%;
     height: 100%;
     margin: auto;
-
+    text-align: left;
 }
-
+/* center and right side of the site */
 .main {
     justify-content: space-between;
 }
@@ -21,11 +21,13 @@ body {
     display: block;
 }
 
+/* left-side */
 .sidebar-sticky {
     width: 100%;
     /* width: fit-content; */
 }
 
+/* left-side sidebar: */
 .sidebar-container {
     width: 100%;
     margin: 0;
@@ -41,8 +43,8 @@ body {
 /* center of the site */
 .content {
     width: fit-content;
+    max-width: 70%;
     overflow-wrap: anywhere;
-
 }
 
 /* footer, author, copyright and @  */
@@ -53,4 +55,11 @@ body {
 /*  footer, author, copyright  */
 .copyright {
     font-weight: bold;
+}
+
+/*  article, table properties  */
+article .align-center, article .align-default {
+    margin-left: unset;
+    margin-right: unset;
+    text-align: left;
 }
